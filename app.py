@@ -8,9 +8,6 @@ from scrapper import *
 
 file_name = ""
 
-today = datetime.now()
-current_time = today.strftime("%H:%M")
-paper_available_time = "07:00"
 
 load_dotenv()
 api_id_env = os.getenv('api_id')
@@ -161,7 +158,7 @@ DOWNLOAD_MESSAGE = " paper selected. Press /download for download the newspaper.
 
 @bot.on_message(filters.command('start'))
 def start(bot, message):
-    if current_time <= paper_available_time:
+    if paper_available_time > current_time:
         bot.send_message(
             message.chat.id, "Note: Due to unavailable of paper in the repective newspaper site, everyday midnight 00:00 AM to 07:00 AM only previous day paper available for download.")
     message.reply(
