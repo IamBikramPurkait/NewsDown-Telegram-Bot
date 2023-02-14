@@ -7,8 +7,5 @@ venv
 *..ipynb_checkpoints
 *tempCodeRunnerFile.py
 __pycache__
-my_bot.session
 .env
 tempCodeRunnerFile.py
-my_bot.session
-my_bot.session-journal
