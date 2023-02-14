@@ -10,3 +10,4 @@ __pycache__
 .env
 tempCodeRunnerFile.py
 my_bot.session
+my_bot.session-journal
