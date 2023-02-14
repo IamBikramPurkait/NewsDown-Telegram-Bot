@@ -8,6 +8,9 @@ from scrapper import *
 
 file_name = ""
 
+today = datetime.now()
+current_time = today.strftime("%H:%M")
+paper_available_time = "07:00"
 
 load_dotenv()
 api_id_env = os.getenv('api_id')
