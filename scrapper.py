@@ -128,3 +128,33 @@ def pioneer(paper_name):
     with open(f"./paper/{formatted_date} {paper_name}.pdf", "wb") as f:
         f.write(response.content)
     return f.name
+
+
+def ajitjalandhar(paper_name):
+    if current_time <= paper_available_time:
+        # finaltime = previous_date+current_month+current_year
+        formatted_date = f"{previous_date}-{current_month}-{current_year}"
+        present_date = previous_date
+    else:
+        # finaltime = current_date+current_month+current_year
+        formatted_date = f"{current_date}-{current_month}-{current_year}"
+        present_date = current_date
+
+    # r = requests.get(
+    #     # f"https://static.ajitjalandhar.com/pages/20230215/1/1/1_page.jpg")
+    #     # f"https://epaper.telegraphindia.com/calcutta/{year}-{month}-{date}/71/Page-1.html")
+    #     f"https://static.ajitjalandhar.com/pages/{current_year}{current_month}{present_date}/1/1/1_page.jpg")
+
+    # # If this line causes an error, run 'pip install html5lib'
+    # soup = BeautifulSoup(r.content, 'html5lib')
+    # text = soup.find('input', attrs={'id': 'totalpages'})
+    # page_no = int(text['value'])
+
+    # "https://static.ajitjalandhar.com/pages/20230215/1/1/1_page.jpg"
+    url = f"https://static.ajitjalandhar.com/pages/{current_year}{current_month}{present_date}/1/"
+    lst = []
+    for i in range(1, 16):
+        lst.append(url+f"{i}/{i}_page.jpg")
+
+    with open(f"./paper/{formatted_date} {paper_name}.pdf", "wb") as f:
+        f.write(img2pdf.convert([requests.get(i).content for i in lst]))
