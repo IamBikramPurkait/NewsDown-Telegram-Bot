@@ -166,7 +166,6 @@ def start(bot, message):
         START_MESSAGE,
         reply_markup=InlineKeyboardMarkup(LANGUAGE_SELECT_BUTTON)
     )
-    pdf_cleaner()
 
 
 @bot.on_callback_query()
@@ -329,6 +328,7 @@ def document(bot, message):
     bot.send_document(
         message.chat.id, file_type, caption="Enjoy your paper😊 and keep reading❤️", file_name=file_name.split('/')[2], protect_content=True)
     file_type.close()
+    pdf_cleaner()
 
 
 print("ALIVE")
