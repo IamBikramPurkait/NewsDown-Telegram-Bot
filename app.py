@@ -21,9 +21,10 @@ bot = Client("my_bot", api_id=api_id_env,
 def pdf_cleaner():
     dir_name = "./paper/"
     list_dir = os.listdir(dir_name)
-    for item in list_dir:
-        if item.endswith(".pdf"):
-            os.remove(os.path.join(dir_name, item))
+    if list_dir:
+        for item in list_dir:
+            if item.endswith(".pdf"):
+                os.remove(os.path.join(dir_name, item))
 
 
 @bot.on_message(filters.command('available_papers'))
