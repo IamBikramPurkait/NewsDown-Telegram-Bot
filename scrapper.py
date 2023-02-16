@@ -1,13 +1,17 @@
 from google_drive_downloader import GoogleDriveDownloader as gdd
 from bs4 import BeautifulSoup
 from datetime import datetime
+from pytz import timezone
 import requests
 import img2pdf
 import html5lib  # (for parsing) pip install html5
 
 today = datetime.now()
-current_time = today.strftime("%H:%M")
 paper_available_time = "07:00"
+current_time = datetime.now(timezone("Asia/Kolkata")
+                            ).strftime('%H:%M')
+
+
 current_date = today.strftime("%d")
 previous_date = str(int(current_date)-1)
 current_month = today.strftime('%m')
