@@ -159,8 +159,11 @@ DOWNLOAD_MESSAGE = " paper selected. Press /download for download the newspaper.
 
 @bot.on_message(filters.command('start'))
 def start(bot, message):
-    print("Current time ", current_time)
-    print("paper available time", paper_available_time)
+    time_stamp = time()
+    current_time = time_stamp.get("current_time")
+    paper_available_time = time_stamp.get("paper_available_time")
+
+    print("Current time -->", current_time)
 
     if current_time <= paper_available_time:
         bot.send_message(

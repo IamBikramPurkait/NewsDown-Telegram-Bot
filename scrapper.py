@@ -6,16 +6,31 @@ import requests
 import img2pdf
 import html5lib  # (for parsing) pip install html5
 
-today = datetime.now()
-paper_available_time = "07:00"
-current_time = datetime.now(timezone("Asia/Kolkata")
-                            ).strftime('%H:%M')
 
+def time():
+    today = datetime.now()
+    paper_available_time = "07:00"
+    current_time = datetime.now(timezone("Asia/Kolkata")
+                                ).strftime('%H:%M')
+    current_date = today.strftime("%d")
+    previous_date = str(int(current_date)-1)
+    current_month = today.strftime('%m')
+    current_year = today.strftime('%Y')
+    present_month = str(today.strftime("%b"))
 
-current_date = today.strftime("%d")
-previous_date = str(int(current_date)-1)
-current_month = today.strftime('%m')
-current_year = today.strftime('%Y')
+    year_month_stamp = today.strftime('%Y-%m')
+
+    time_stamp = {
+        "paper_available_time": paper_available_time,
+        "current_time": current_time,
+        "current_date": current_date,
+        "previous_date": previous_date,
+        "current_month": current_month,
+        "current_year": current_year,
+        "present_month": present_month,
+        "year_month_stamp": year_month_stamp
+    }
+    return time_stamp
 
 
 papers_link = {
@@ -40,13 +55,22 @@ papers_link = {
 
 
 def paper_downloader(paper_name):
+    time_stamp = time()
+    current_time = time_stamp.get("current_time")
+    paper_available_time = time_stamp.get("paper_available_time")
+    current_date = time_stamp.get("current_date")
+    previous_date = time_stamp.get("previous_date")
+    current_month = time_stamp.get("current_month")
+    present_month = time_stamp.get("present_month")
+    current_year = time_stamp.get("current_year")
+
+    print(current_time)
     if current_time <= paper_available_time:
         present_day = previous_date
         formatted_date = f"{previous_date}-{current_month}-{current_year}"
     else:
         present_day = current_date
         formatted_date = f"{current_date}-{current_month}-{current_year}"
-    present_month = str(today.strftime("%b"))
     today_tag_text = f"{present_day} {present_month} {current_year}: Download Now"
 
     r = requests.get(papers_link.get(paper_name))
@@ -72,6 +96,14 @@ def paper_downloader(paper_name):
 
 
 def anandabazar(paper_name):
+    time_stamp = time()
+    current_time = time_stamp.get("current_time")
+    paper_available_time = time_stamp.get("paper_available_time")
+    current_date = time_stamp.get("current_date")
+    previous_date = time_stamp.get("previous_date")
+    current_month = time_stamp.get("current_month")
+    current_year = time_stamp.get("current_year")
+
     if current_time <= paper_available_time:
         finaltime = previous_date+current_month+current_year
         formatted_date = f"{previous_date}-{current_month}-{current_year}"
@@ -103,14 +135,21 @@ def anandabazar(paper_name):
 
 
 def ekdin(paper_name):
+    time_stamp = time()
+    current_time = time_stamp.get("current_time")
+    paper_available_time = time_stamp.get("paper_available_time")
+    current_date = time_stamp.get("current_date")
+    previous_date = time_stamp.get("previous_date")
+    current_month = time_stamp.get("current_month")
+    current_year = time_stamp.get("current_year")
+
     if current_time <= paper_available_time:
         date_stamp = f"{previous_date}-{current_month}-{current_year}"
         formatted_date = f"{previous_date}-{current_month}-{current_year}"
     else:
         date_stamp = f"{current_date}-{current_month}-{current_year}"
         formatted_date = f"{current_date}-{current_month}-{current_year}"
-    year_month_stamp = today.strftime('%Y-%m')
-    print(date_stamp)
+
     link = f"https://www.ekdin-epaper.com/media/{year_month_stamp}/ekdin-{date_stamp}.pdf"
     response = requests.get(link)
     with open(f"./paper/{formatted_date} {paper_name}.pdf", "wb") as f:
@@ -119,6 +158,14 @@ def ekdin(paper_name):
 
 
 def pioneer(paper_name):
+    time_stamp = time()
+    current_time = time_stamp.get("current_time")
+    paper_available_time = time_stamp.get("paper_available_time")
+    current_date = time_stamp.get("current_date")
+    previous_date = time_stamp.get("previous_date")
+    current_month = time_stamp.get("current_month")
+    current_year = time_stamp.get("current_year")
+
     if current_time <= paper_available_time:
         date_stamp = f"{current_year}-{current_month}-{previous_date}"
         formatted_date = f"{previous_date}-{current_month}-{current_year}"
@@ -132,3 +179,6 @@ def pioneer(paper_name):
     with open(f"./paper/{formatted_date} {paper_name}.pdf", "wb") as f:
         f.write(response.content)
     return f.name
+
+
+# print(paper_downloader("HINDU"))
