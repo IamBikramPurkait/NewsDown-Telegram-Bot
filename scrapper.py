@@ -106,7 +106,7 @@ def ekdin(paper_name):
         date_stamp = f"{current_date}-{current_month}-{current_year}"
         formatted_date = f"{current_date}-{current_month}-{current_year}"
     year_month_stamp = today.strftime('%Y-%m')
-
+    print(date_stamp)
     link = f"https://www.ekdin-epaper.com/media/{year_month_stamp}/ekdin-{date_stamp}.pdf"
     response = requests.get(link)
     with open(f"./paper/{formatted_date} {paper_name}.pdf", "wb") as f:
