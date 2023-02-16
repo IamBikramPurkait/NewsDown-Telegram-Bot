@@ -159,12 +159,12 @@ DOWNLOAD_MESSAGE = " paper selected. Press /download for download the newspaper.
 
 @bot.on_message(filters.command('start'))
 def start(bot, message):
-    # if paper_available_time >= current_time:
-    #     bot.send_message(
-    #         chat_id=message.chat.id, text="Note: Due to unavailable of paper in the repective newspaper site, everyday midnight 00:00 AM to 07:00 AM only previous day paper available for download.")
+    print("Current time ", current_time)
+    print("paper available time", paper_available_time)
 
-    bot.send_message(
-        message.chat.id, "Note: Due to unavailable of paper in the repective newspaper site, everyday midnight 00:00 AM to 07:00 AM or untill the paper is published in the respective site this bot is not able to download any paper.Please try after 7 or 8 AM.Thank You🙏")
+    if current_time <= paper_available_time:
+        bot.send_message(
+            message.chat.id, "Note: Due to unavailable of paper in the repective newspaper site, everyday midnight 00:00 AM to 07:00 AM only previous day paper available for download.")
     message.reply(
         START_MESSAGE,
         reply_markup=InlineKeyboardMarkup(LANGUAGE_SELECT_BUTTON)
