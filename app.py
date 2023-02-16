@@ -162,8 +162,12 @@ def start(bot, message):
     time_stamp = time()
     current_time = time_stamp.get("current_time")
     paper_available_time = time_stamp.get("paper_available_time")
+    current_date = time_stamp.get("current_date")
+    previous_date = time_stamp.get("previous_date")
 
     print("Current time -->", current_time)
+    print(current_date)
+    print(previous_date)
 
     if current_time <= paper_available_time:
         bot.send_message(
