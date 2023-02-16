@@ -142,6 +142,7 @@ def ekdin(paper_name):
     previous_date = time_stamp.get("previous_date")
     current_month = time_stamp.get("current_month")
     current_year = time_stamp.get("current_year")
+    year_month_stamp = time_stamp.get("year_month_stamp")
 
     if current_time <= paper_available_time:
         date_stamp = f"{previous_date}-{current_month}-{current_year}"
