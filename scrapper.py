@@ -8,7 +8,7 @@ import html5lib  # (for parsing) pip install html5
 
 
 def time():
-    today = datetime.utcnow()
+    today = datetime.now(timezone("Asia/Kolkata"))
     paper_available_time = "07:00"
     current_time = datetime.now(timezone("Asia/Kolkata")
                                 ).strftime('%H:%M')
