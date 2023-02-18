@@ -34,13 +34,13 @@ def time():
     return time_stamp
 
 
-def pdf_cleaner():
-    dir_name = "./paper/"
-    list_dir = os.listdir(dir_name)
-    if list_dir:
-        for item in list_dir:
-            if item.endswith(".pdf"):
-                os.remove(os.path.join(dir_name, item))
+# def pdf_cleaner():
+#     dir_name = "./paper/"
+#     list_dir = os.listdir(dir_name)
+#     if list_dir:
+#         for item in list_dir:
+#             if item.endswith(".pdf"):
+#                 os.remove(os.path.join(dir_name, item))
 
 
 papers_link = {
