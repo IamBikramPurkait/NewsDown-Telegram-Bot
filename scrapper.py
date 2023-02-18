@@ -4,6 +4,7 @@ from datetime import datetime
 from pytz import timezone
 import requests
 import img2pdf
+import os
 import html5lib  # (for parsing) pip install html5
 
 
@@ -33,25 +34,34 @@ def time():
     return time_stamp
 
 
+def pdf_cleaner():
+    dir_name = "./paper/"
+    list_dir = os.listdir(dir_name)
+    if list_dir:
+        for item in list_dir:
+            if item.endswith(".pdf"):
+                os.remove(os.path.join(dir_name, item))
+
+
 papers_link = {
-    "TIMES OF INDIA": "https://dailyepaper.in/times-of-india-epaper-pdf-download-2023/",
+    "TIMES_OF_INDIA": "https://dailyepaper.in/times-of-india-epaper-pdf-download-2023/",
     "STATESMAN": "https://dailyepaper.in/statesman-newspaper-today/",
     "TELEGRAPH": "https://dailyepaper.in/telegraph-newspaper/",
-    "ECONOMIC TIMES": "https://dailyepaper.in/economic-times-newspaper-today/",
-    "FINANCIAL EXPRESS": "https://dailyepaper.in/financial-express-newspaper/",
-    "HINDU": "https://dailyepaper.in/hindu-analysis-notes-in-pdf-2023/",
+    "ECONOMIC_TIMES": "https://dailyepaper.in/economic-times-newspaper-today/",
+    "FINANCIAL_EXPRESS": "https://dailyepaper.in/financial-express-newspaper/",
     "TRIBUNE": "https://dailyepaper.in/the-tribune-epaper/",
-    "DECCAN CHRONICLE": "https://dailyepaper.in/deccan-chronicle-epaper/",
+    "DECCAN_CHRONICLE": "https://dailyepaper.in/deccan-chronicle-epaper/",
     "NAVBHARAT": "https://dailyepaper.in/navbharat-times-epaper/",
-    "DAINAIK BHASKAR": "https://dailyepaper.in/dainik-bhaskar-epaper/",
-    "DAINIK JAGRAN": "https://dailyepaper.in/dainik-jagran-newspaper-download-2022/",
+    "DAINIK_BHASKAR": "https://dailyepaper.in/dainik-bhaskar-epaper/",
+    "DAINIK_JAGRAN": "https://dailyepaper.in/dainik-jagran-newspaper-download-2022/",
     "JANSATTA": "https://dailyepaper.in/jansatta-epaper-pdf/",
-    "DAINIK NAVAJYOTI": "https://dailyepaper.in/dainik-navajyoti-epaper/",
-    "RASHTRIYA SAHARA": "https://dailyepaper.in/rashtriya-sahara-epaper/",
-    "RAJASTHAN PATRIKA": "https://dailyepaper.in/rajasthan-patrika-epaper/",
-    "PUNJAB KESARI": "https://dailyepaper.in/punjab-kesari-epaper/",
-    "PRABHAT KHABAR": "https://dailyepaper.in/prabhat-khabar-epaper/"
+    "DAINIK_NAVAJYOTI": "https://dailyepaper.in/dainik-navajyoti-epaper/",
+    "RASHTRIYA_SAHARA": "https://dailyepaper.in/rashtriya-sahara-epaper/",
+    "RAJASTHAN_PATRIKA": "https://dailyepaper.in/rajasthan-patrika-epaper/",
+    "PUNJAB_KESARI": "https://dailyepaper.in/punjab-kesari-epaper/"
 }
+
+pioneer_paper_list = ["PIONEER-HINDI", "PIONEER-ENGLISH"]
 
 
 def paper_downloader(paper_name):
@@ -64,7 +74,6 @@ def paper_downloader(paper_name):
     present_month = time_stamp.get("present_month")
     current_year = time_stamp.get("current_year")
 
-    print(current_time)
     if current_time <= paper_available_time:
         present_day = previous_date
         formatted_date = f"{previous_date}-{current_month}-{current_year}"
@@ -151,7 +160,7 @@ def ekdin(paper_name):
         date_stamp = f"{current_date}-{current_month}-{current_year}"
         formatted_date = f"{current_date}-{current_month}-{current_year}"
 
-    link = f"https://www.ekdin-epaper.com/media/{year_month_stamp}/ekdin-{date_stamp}.pdf"
+    link = f"https://www.{paper_name.lower()}-epaper.com/media/{year_month_stamp}/{paper_name.lower()}-{date_stamp}.pdf"
     response = requests.get(link)
     with open(f"./paper/{formatted_date} {paper_name}.pdf", "wb") as f:
         f.write(response.content)
@@ -174,7 +183,7 @@ def pioneer(paper_name):
         date_stamp = f"{current_year}-{current_month}-{current_date}"
         formatted_date = f"{current_date}-{current_month}-{current_year}"
 
-    link = f"https://www.dailypioneer.com/uploads/{current_year}/epaper/february/delhi-{paper_name.lower().split('-')[1]}-edition-{date_stamp}.pdf"
+    link = f"https://www.daily{paper_name.lower().split('-')[0]}.com/uploads/{current_year}/epaper/february/delhi-{paper_name.lower().split('-')[1]}-edition-{date_stamp}.pdf"
 
     response = requests.get(link)
     with open(f"./paper/{formatted_date} {paper_name}.pdf", "wb") as f:
@@ -182,4 +191,4 @@ def pioneer(paper_name):
     return f.name
 
 
-# print(paper_downloader("HINDU"))
+# print(paper_downloader("TIMES_OF_INDIA"))
