@@ -18,7 +18,7 @@ bot = Client("my_bot", api_id=api_id_env,
              api_hash=api_hash_env, bot_token=bot_token_env)
 
 
-def pdf_cleaner():
+def pdf_cleaner_newsdown():
     dir_name = "./paper/"
     list_dir = os.listdir(dir_name)
     if list_dir:
@@ -91,7 +91,6 @@ ENGLISH_NEWS_BUTTON = [
         InlineKeyboardButton('TELEGRAPH', callback_data="TELEGRAPH")
     ],
     [
-        InlineKeyboardButton('HINDU', callback_data="HINDU"),
         InlineKeyboardButton('TRIBUNE', callback_data="TRIBUNE"),
         InlineKeyboardButton('PIONEER', callback_data="PIONEER_ENGLISH")
     ],
@@ -111,15 +110,9 @@ HINDI_NEWS_BUTTON = [
     [
         InlineKeyboardButton('DAINIK NAVAJYOTI',
                              callback_data="DAINIK_NAVAJYOTI"),
-        InlineKeyboardButton('NAVBHARAT',
-                             callback_data="NAVBHARAT")
-
-    ],
-    [
-        InlineKeyboardButton(
-            'PRABHAT KHABAR', callback_data="PRABHAT_KHABAR"),
         InlineKeyboardButton(
             'PUNJAB KESARI', callback_data="PUNJAB_KESARI")
+
     ],
     [
         InlineKeyboardButton('RASHTRIYA SAHARA',
@@ -130,7 +123,8 @@ HINDI_NEWS_BUTTON = [
 
     [
         InlineKeyboardButton('PIONEER', callback_data="PIONEER_HINDI"),
-        InlineKeyboardButton('JANSATTA', callback_data="JANSATTA")
+        InlineKeyboardButton('JANSATTA', callback_data="JANSATTA"),
+        InlineKeyboardButton('NAVBHARAT', callback_data="NAVBHARAT")
 
     ],
     [
@@ -204,25 +198,25 @@ def callback_query(bot, callback):
             reply_markup=InlineKeyboardMarkup(LANGUAGE_SELECT_BUTTON)
         )
     elif callback.data == "TIMES_OF_INDIA":
-        paper_name = "TIMES OF INDIA"
+        paper_name = "TIMES_OF_INDIA"
         file_name = paper_downloader(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
     elif callback.data == "ECONOMIC_TIMES":
-        paper_name = "ECONOMIC TIMES"
+        paper_name = "ECONOMIC_TIMES"
         file_name = paper_downloader(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
     elif callback.data == "DECCAN_CHRONICLE":
-        paper_name = "DECCAN CHRONICLE"
+        paper_name = "DECCAN_CHRONICLE"
         file_name = paper_downloader(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
     elif callback.data == "FINANCIAL_EXPRESS":
-        paper_name = "FINANCIAL EXPRESS"
+        paper_name = "FINANCIAL_EXPRESS"
         file_name = paper_downloader(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
@@ -234,13 +228,7 @@ def callback_query(bot, callback):
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
     elif callback.data == "TELEGRAPH":
-        paper_name = "TELEGRAPHINDIA"
-        file_name = anandabazar(paper_name)
-        callback.edit_message_text(
-            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
-        )
-    elif callback.data == "HINDU":
-        paper_name = "HINDU"
+        paper_name = "TELEGRAPH"
         file_name = paper_downloader(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
@@ -258,19 +246,19 @@ def callback_query(bot, callback):
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
     elif callback.data == "DAINAIK_BHASKAR":
-        paper_name = "DAINAIK BHASKAR"
+        paper_name = "DAINAIK_BHASKAR"
         file_name = paper_downloader(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
     elif callback.data == "DAINIK_JAGRAN":
-        paper_name = "DAINIK JAGRAN"
+        paper_name = "DAINIK_JAGRAN"
         file_name = paper_downloader(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
     elif callback.data == "DAINIK_NAVAJYOTI":
-        paper_name = "DAINIK NAVAJYOTI"
+        paper_name = "DAINIK_NAVAJYOTI"
         file_name = paper_downloader(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
@@ -288,25 +276,19 @@ def callback_query(bot, callback):
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
     elif callback.data == "PUNJAB_KESARI":
-        paper_name = "PUNJAB KESARI"
+        paper_name = "PUNJAB_KESARI"
         file_name = paper_downloader(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
     elif callback.data == "RASHTRIYA_SAHARA":
-        paper_name = "RASHTRIYA SAHARA"
+        paper_name = "RASHTRIYA_SAHARA"
         file_name = paper_downloader(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
     elif callback.data == "RAJASTHAN_PATRIKA":
-        paper_name = "RAJASTHAN PATRIKA"
-        file_name = paper_downloader(paper_name)
-        callback.edit_message_text(
-            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
-        )
-    elif callback.data == "PRABHAT_KHABAR":
-        paper_name = "PRABHAT KHABAR"
+        paper_name = "RAJASTHAN_PATRIKA"
         file_name = paper_downloader(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
@@ -338,7 +320,7 @@ def document(bot, message):
     bot.send_document(
         message.chat.id, file_type, caption="Enjoy your paper😊 and keep reading❤️", file_name=file_name.split('/')[2], protect_content=True)
     file_type.close()
-    pdf_cleaner()
+    pdf_cleaner_newsdown()
 
 
 print("ALIVE")
