@@ -7,6 +7,8 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyb
 from scrapper import *
 
 file_name = ""
+not_available_papers = []
+file_name_list = []
 
 
 load_dotenv()
@@ -321,6 +323,54 @@ def document(bot, message):
         message.chat.id, file_type, caption="Enjoy your paper😊 and keep reading❤️", file_name=file_name.split('/')[2], protect_content=True)
     file_type.close()
     pdf_cleaner_newsdown()
+
+
+@bot.on_message(filters.command("forward"))
+def forward_messages(bot, message):
+
+    def send_document(file_name):
+        file_type = open(file_name, 'rb')
+        bot.send_document(
+            message.chat.id, file_type, file_name=file_name.split('/')[2])
+
+    def paper():
+        # bot.send_message(message.chat.id, "Starting...")
+        print("Start Forwarding")
+        try:
+            # LIST OF PAPERS
+            for name, value in papers_link.items():
+                file_name = paper_downloader(name)
+                file_name_list.append(file_name)
+
+            # ANANDABAZAR
+            file_name = anandabazar("ANANDABAZAR")
+            file_name_list.append(file_name)
+
+            # EKDIN
+            file_name = ekdin("EKDIN")
+            file_name_list.append(file_name)
+
+            # PIONEER
+            for name in pioneer_paper_list:
+                file_name = pioneer(name)
+                file_name_list.append(file_name)
+
+        except:
+            not_available_papers.append("error")
+
+        bot.send_message(message.chat.id, "Start Forwarding")
+        for name in file_name_list:
+            bot.send_sticker(
+                message.chat.id, f"./sticker/{name.split(' ')[1].split('.')[0]}.webp")
+            send_document(name)
+
+        pdf_cleaner_newsdown()
+
+        print(not_available_papers)
+        file_name_list.clear()
+        print("Done")
+
+    paper()
 
 
 print("ALIVE")
