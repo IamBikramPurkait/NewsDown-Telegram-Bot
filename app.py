@@ -29,6 +29,41 @@ def pdf_cleaner_newsdown():
                 os.remove(os.path.join(dir_name, item))
 
 
+def file_name_generator(paper_name):
+    for _ in range(1):
+        try:
+            file_name = alternate_downloader(paper_name)
+            break
+        except Exception:
+            print("error1")
+
+        try:
+            file_name = paper_downloader(paper_name)
+            break
+        except Exception:
+            print("error2")
+
+        try:
+            file_name = anandabazar(paper_name)
+            break
+        except Exception:
+            print("error3")
+
+        try:
+            file_name = ekdin(paper_name)
+            break
+        except Exception:
+            print("error4")
+
+        try:
+            file_name = pioneer(paper_name)
+            break
+        except Exception:
+            print("error5")
+
+    return file_name
+
+
 @bot.on_message(filters.command('available_papers'))
 def available_papers(bot, message):
     bot.send_photo(
@@ -79,8 +114,30 @@ ENGLISH_NEWS_BUTTON = [
         InlineKeyboardButton(
             'TIMES OF INDIA', callback_data="TIMES_OF_INDIA"),
         InlineKeyboardButton(
+            'HINDUSTAN TIMES', callback_data="HINDUSTAN_TIMES")
+    ],
+
+    [
+        InlineKeyboardButton(
+            'MUMBAI MIRROR', callback_data="MUMBAI_MIRROR"),
+        InlineKeyboardButton(
             'ECONOMIC TIMES', callback_data="ECONOMIC_TIMES")
     ],
+    [
+        InlineKeyboardButton(
+            'BUSINESS STANDARD', callback_data="BUSINESS_STANDARD"),
+        InlineKeyboardButton(
+            'BUSINESS LINE', callback_data="BUSINESS_LINE")
+    ],
+    [
+        InlineKeyboardButton(
+            'MINT', callback_data="MINT"),
+        InlineKeyboardButton(
+            'ASIAN AGE', callback_data="ASIAN_AGE")
+    ],
+
+
+
     [
         InlineKeyboardButton('DECCAN CHRONICLE',
                              callback_data="DECCAN_CHRONICLE"),
@@ -125,10 +182,18 @@ HINDI_NEWS_BUTTON = [
 
     [
         InlineKeyboardButton('PIONEER', callback_data="PIONEER_HINDI"),
+        InlineKeyboardButton('HINDUSTAN DAINIK',
+                             callback_data="HINDUSTAN_DAINIK")
+    ],
+    [
         InlineKeyboardButton('JANSATTA', callback_data="JANSATTA"),
         InlineKeyboardButton('NAVBHARAT', callback_data="NAVBHARAT")
-
     ],
+    [
+        InlineKeyboardButton('AMAR UJALA', callback_data="AMAR_UJALA"),
+        InlineKeyboardButton('HARI BHOOMI', callback_data="HARI_BHOOMI")
+    ],
+
     [
         InlineKeyboardButton(
             'BACK', callback_data="BACK")
@@ -139,9 +204,17 @@ BENGALI_NEWS_BUTTON = [
     [
         InlineKeyboardButton(
             'ANANDABAZAR', callback_data="ANANDABAZAR"),
+        InlineKeyboardButton('DAINIK STATESMAN',
+                             callback_data="DAINIK_STATESMAN")
+    ],
+    [
+        InlineKeyboardButton('EISAMAY', callback_data="EISAMAY"),
         InlineKeyboardButton('EKDIN', callback_data="EKDIN")
     ],
-
+    [
+        InlineKeyboardButton('SANGBAD PRATIDIN',
+                             callback_data="SANGBAD_PRATIDIN")
+    ],
     [
         InlineKeyboardButton('BACK', callback_data="BACK")
     ]
@@ -153,17 +226,18 @@ START_MESSAGE = "Select a Langauge"
 DOWNLOAD_MESSAGE = " paper selected. Press /download for download the newspaper."
 
 
-@bot.on_message(filters.command('start'))
+@ bot.on_message(filters.command('start'))
 def start(bot, message):
     time_stamp = time()
     current_time = time_stamp.get("current_time")
     paper_available_time = time_stamp.get("paper_available_time")
-    current_date = time_stamp.get("current_date")
-    previous_date = time_stamp.get("previous_date")
 
     print("Current time -->", current_time)
-    print(current_date)
-    print(previous_date)
+
+    # current_date = time_stamp.get("current_date")
+    # previous_date = time_stamp.get("previous_date")
+    # print(current_date)
+    # print(previous_date)
 
     if current_time <= paper_available_time:
         bot.send_message(
@@ -201,115 +275,216 @@ def callback_query(bot, callback):
         )
     elif callback.data == "TIMES_OF_INDIA":
         paper_name = "TIMES_OF_INDIA"
-        file_name = paper_downloader(paper_name)
+        file_name = file_name_generator(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
+
+    elif callback.data == "HINDUSTAN_TIMES":
+        paper_name = "HINDUSTAN_TIMES"
+        file_name = file_name_generator(paper_name)
+        callback.edit_message_text(
+            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
+        )
+
+    elif callback.data == "MUMBAI_MIRROR":
+        paper_name = "MUMBAI_MIRROR"
+        file_name = file_name_generator(paper_name)
+        callback.edit_message_text(
+            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
+        )
+
     elif callback.data == "ECONOMIC_TIMES":
         paper_name = "ECONOMIC_TIMES"
-        file_name = paper_downloader(paper_name)
+        file_name = file_name_generator(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
+
+    elif callback.data == "BUSINESS_STANDARD":
+        paper_name = "BUSINESS_STANDARD"
+        file_name = file_name_generator(paper_name)
+        callback.edit_message_text(
+            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
+        )
+
+    elif callback.data == "BUSINESS_LINE":
+        paper_name = "BUSINESS_LINE"
+        file_name = file_name_generator(paper_name)
+        callback.edit_message_text(
+            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
+        )
+
+    elif callback.data == "MINT":
+        paper_name = "MINT"
+        file_name = file_name_generator(paper_name)
+        callback.edit_message_text(
+            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
+        )
+
+    elif callback.data == "ASIAN_AGE":
+        paper_name = "ASIAN_AGE"
+        file_name = file_name_generator(paper_name)
+        callback.edit_message_text(
+            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
+        )
+
     elif callback.data == "DECCAN_CHRONICLE":
         paper_name = "DECCAN_CHRONICLE"
-        file_name = paper_downloader(paper_name)
+        file_name = file_name_generator(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
     elif callback.data == "FINANCIAL_EXPRESS":
         paper_name = "FINANCIAL_EXPRESS"
-        file_name = paper_downloader(paper_name)
+        file_name = file_name_generator(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
     elif callback.data == "STATESMAN":
         paper_name = "STATESMAN"
-        file_name = paper_downloader(paper_name)
+        file_name = file_name_generator(paper_name)
+
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
+
     elif callback.data == "TELEGRAPH":
-        paper_name = "TELEGRAPH"
-        file_name = paper_downloader(paper_name)
+        paper_name = "TELEGRAPHINDIA"
+        file_name = file_name_generator(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
+
     elif callback.data == "TRIBUNE":
         paper_name = "TRIBUNE"
-        file_name = paper_downloader(paper_name)
+        file_name = file_name_generator(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
+
     elif callback.data == "PIONEER_ENGLISH":
         paper_name = "PIONEER-ENGLISH"
-        file_name = pioneer(paper_name)
+        file_name = file_name_generator(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
+
     elif callback.data == "DAINAIK_BHASKAR":
         paper_name = "DAINAIK_BHASKAR"
-        file_name = paper_downloader(paper_name)
+        file_name = file_name_generator(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
+
     elif callback.data == "DAINIK_JAGRAN":
         paper_name = "DAINIK_JAGRAN"
-        file_name = paper_downloader(paper_name)
+        file_name = file_name_generator(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
+
     elif callback.data == "DAINIK_NAVAJYOTI":
         paper_name = "DAINIK_NAVAJYOTI"
-        file_name = paper_downloader(paper_name)
+        file_name = file_name_generator(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
-    elif callback.data == "NAVBHARAT":
-        paper_name = "NAVBHARAT"
-        file_name = paper_downloader(paper_name)
-        callback.edit_message_text(
-            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
-        )
-    elif callback.data == "JANSATTA":
-        paper_name = "JANSATTA"
-        file_name = paper_downloader(paper_name)
-        callback.edit_message_text(
-            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
-        )
+
     elif callback.data == "PUNJAB_KESARI":
         paper_name = "PUNJAB_KESARI"
-        file_name = paper_downloader(paper_name)
+        file_name = file_name_generator(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
+
     elif callback.data == "RASHTRIYA_SAHARA":
         paper_name = "RASHTRIYA_SAHARA"
-        file_name = paper_downloader(paper_name)
+        file_name = file_name_generator(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
+
     elif callback.data == "RAJASTHAN_PATRIKA":
         paper_name = "RAJASTHAN_PATRIKA"
-        file_name = paper_downloader(paper_name)
+        file_name = file_name_generator(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
+
     elif callback.data == "PIONEER_HINDI":
         paper_name = "PIONEER-HINDI"
-        file_name = pioneer(paper_name)
+        file_name = file_name_generator(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
+
+    elif callback.data == "HINDUSTAN_DAINIK":
+        paper_name = "HINDUSTAN_DAINIK"
+        file_name = file_name_generator(paper_name)
+        callback.edit_message_text(
+            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
+        )
+
+    elif callback.data == "JANSATTA":
+        paper_name = "JANSATTA"
+        file_name = file_name_generator(paper_name)
+        callback.edit_message_text(
+            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
+        )
+
+    elif callback.data == "NAVBHARAT":
+        paper_name = "NAVBHARAT"
+        file_name = file_name_generator(paper_name)
+        callback.edit_message_text(
+            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
+        )
+
+    elif callback.data == "AMAR_UJALA":
+        paper_name = "AMAR_UJALA"
+        file_name = file_name_generator(paper_name)
+        callback.edit_message_text(
+            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
+        )
+
+    elif callback.data == "HARI_BHOOMI":
+        paper_name = "HARI_BHOOMI"
+        file_name = file_name_generator(paper_name)
+        callback.edit_message_text(
+            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
+        )
+
     elif callback.data == "ANANDABAZAR":
         paper_name = "ANANDABAZAR"
-        file_name = anandabazar(paper_name)
+        file_name = file_name_generator(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
+
+    elif callback.data == "DAINIK_STATESMAN":
+        paper_name = "DAINIK_STATESMAN"
+        file_name = file_name_generator(paper_name)
+        callback.edit_message_text(
+            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
+        )
+
+    elif callback.data == "EISAMAY":
+        paper_name = "EISAMAY"
+        file_name = file_name_generator(paper_name)
+        callback.edit_message_text(
+            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
+        )
+
     elif callback.data == "EKDIN":
         paper_name = "EKDIN"
-        file_name = ekdin(paper_name)
+        file_name = file_name_generator(paper_name)
+        callback.edit_message_text(
+            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
+        )
+
+    elif callback.data == "SANGBAD_PRATIDIN":
+        paper_name = "SANGBAD_PRATIDIN"
+        file_name = file_name_generator(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"
         )
@@ -336,27 +511,40 @@ def forward_messages(bot, message):
     def paper():
         # bot.send_message(message.chat.id, "Starting...")
         print("Start Forwarding")
-        try:
-            # LIST OF PAPERS
-            for name, value in papers_link.items():
-                file_name = paper_downloader(name)
+
+        # LIST OF PAPERS
+        for name, value in alternate_papers_link.items():
+            try:
+                file_name = file_name_generator(name)
                 file_name_list.append(file_name)
+            except Exception:
+                print("error")
+                continue
 
-            # ANANDABAZAR
-            file_name = anandabazar("ANANDABAZAR")
-            file_name_list.append(file_name)
+        # ANANDABAZAR AND TELEGRAPHINDIA
+        for name in anandabazar_papers_list:
+            try:
+                file_name = file_name_generator(name)
+                file_name_list.append(file_name)
+            except Exception:
+                print("error")
+                continue
 
-            # EKDIN
+        # EKDIN
+        try:
             file_name = ekdin("EKDIN")
             file_name_list.append(file_name)
+        except Exception:
+            print("error")
 
-            # PIONEER
-            for name in pioneer_paper_list:
+        # PIONEER
+        for name in pioneer_paper_list:
+            try:
                 file_name = pioneer(name)
                 file_name_list.append(file_name)
-
-        except:
-            not_available_papers.append("error")
+            except Exception:
+                print("error")
+                continue
 
         bot.send_message(message.chat.id, "Start Forwarding")
         for name in file_name_list:
