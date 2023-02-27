@@ -34,23 +34,16 @@ def time():
     return time_stamp
 
 
-# def pdf_cleaner():
-#     dir_name = "./paper/"
-#     list_dir = os.listdir(dir_name)
-#     if list_dir:
-#         for item in list_dir:
-#             if item.endswith(".pdf"):
-#                 os.remove(os.path.join(dir_name, item))
-
-
 papers_link = {
+    # ENGLISH
     "TIMES_OF_INDIA": "https://dailyepaper.in/times-of-india-epaper-pdf-download-2023/",
     "STATESMAN": "https://dailyepaper.in/statesman-newspaper-today/",
-    "TELEGRAPH": "https://dailyepaper.in/telegraph-newspaper/",
     "ECONOMIC_TIMES": "https://dailyepaper.in/economic-times-newspaper-today/",
     "FINANCIAL_EXPRESS": "https://dailyepaper.in/financial-express-newspaper/",
     "TRIBUNE": "https://dailyepaper.in/the-tribune-epaper/",
     "DECCAN_CHRONICLE": "https://dailyepaper.in/deccan-chronicle-epaper/",
+
+    # HINDI
     "NAVBHARAT": "https://dailyepaper.in/navbharat-times-epaper/",
     "DAINIK_BHASKAR": "https://dailyepaper.in/dainik-bhaskar-epaper/",
     "DAINIK_JAGRAN": "https://dailyepaper.in/dainik-jagran-newspaper-download-2022/",
@@ -62,6 +55,47 @@ papers_link = {
 }
 
 pioneer_paper_list = ["PIONEER-HINDI", "PIONEER-ENGLISH"]
+anandabazar_papers_list = ["ANANDABAZAR", "TELEGRAPHINDIA"]
+
+alternate_papers_link = {
+
+    # ENGLISH
+    "HINDUSTAN_TIMES": "https://www.careerswave.in/hindustan-times-newspaper-free-download/",
+    "BUSINESS_LINE": "https://www.careerswave.in/business-line-newspaper-download/",
+    "ECONOMIC_TIMES": "https://www.careerswave.in/the-economic-times-epaper-download/",
+    "TIMES_OF_INDIA": "https://www.careerswave.in/the-times-of-india-pdf-newspaper-download/",
+    "BUSINESS_STANDARD": "https://www.careerswave.in/business-standard-newspaper-free-download/",
+    "FINANCIAL_EXPRESS": "https://www.careerswave.in/the-financial-express-epaper-free-pdf-download/",
+    "MUMBAI_MIRROR": "https://www.careerswave.in/mumbai-mirror-epaper-download/",
+    "DECCAN_CHRONICLE": "https://www.careerswave.in/deccan-chronicle-newspaper-download/",
+    "MINT": "https://www.careerswave.in/mint-newspaper-download/",
+    "STATESMAN": "https://www.careerswave.in/the-statesman-epaper-download/",
+    "TRIBUNE": "https://www.careerswave.in/tribune-newspaper-download/",
+    "ASIAN_AGE": "https://www.careerswave.in/the-asian-age-epaper-download/",
+
+    # HINDI
+    "AMAR_UJALA": "https://www.careerswave.in/amar-ujala-newspaper-download/",
+    "DAINIK_JAGRAN": "https://www.careerswave.in/dainik-jagran-newspaper-free-download/",
+    "HINDUSTAN_DAINIK": "https://www.careerswave.in/hindustan-dainik-newspaper-download/",
+    "JANSATTA": "https://www.careerswave.in/jansatta-newspaper-download/",
+    "NAVBHARAT": "https://www.careerswave.in/navbharat-times-download/",
+    "RAJASTHAN_PATRIKA": "https://www.careerswave.in/rajasthan-patrika-newspaper-download/",
+    "DAINIK_NAVAJYOTI": "https://www.careerswave.in/dainik-navajyoti-epaper-download/",
+    "PUNJAB_KESARI": "https://www.careerswave.in/punjab-kesari-newspaper-pdf-download/",
+    "DAINIK_BHASKAR": "https://www.careerswave.in/dainik-bhaskar-download/",
+    "HARI_BHOOMI": "https://www.careerswave.in/hari-bhoomi-epaper-download/",
+    "RASHTRIYA_SAHARA": "https://www.careerswave.in/rashtriya-sahara-epaper-download/",
+
+    # BENGALI
+    "ANANDABAZAR": "https://www.careerswave.in/anandabazar-patrika-newspaper-download/",
+    "DAINIK_STATESMAN": "https://www.careerswave.in/dainik-statesman-epaper-download/",
+    "EISAMAY": "https://www.careerswave.in/ei-samay-epaper-pdf/",
+    "SANGBAD_PRATIDIN": "https://www.careerswave.in/sangbad-pratidin-epaper/",
+
+    # PUNJABI
+    "TRIBUNE_PUNJABI": "https://www.careerswave.in/punjabi-tribune-epaper/"
+
+}
 
 
 def paper_downloader(paper_name):
@@ -99,6 +133,7 @@ def paper_downloader(paper_name):
         file_id = resp.url.split('/')[5]
     else:
         file_id = link.split('/')[5]
+
     gdd.download_file_from_google_drive(file_id=file_id,
                                         dest_path=f"./paper/{formatted_date} {paper_name}.pdf", showsize=True, overwrite=True)
     return f"./paper/{formatted_date} {paper_name}.pdf"
@@ -191,4 +226,49 @@ def pioneer(paper_name):
     return f.name
 
 
-# print(paper_downloader("TIMES_OF_INDIA"))
+def alternate_downloader(paper_name):
+    time_stamp = time()
+    current_time = time_stamp.get("current_time")
+    paper_available_time = time_stamp.get("paper_available_time")
+    current_date = time_stamp.get("current_date")
+    previous_date = time_stamp.get("previous_date")
+    current_month = time_stamp.get("current_month")
+    current_year = time_stamp.get("current_year")
+
+    if current_time <= paper_available_time:
+        present_day = previous_date
+        formatted_date = f"{previous_date}-{current_month}-{current_year}"
+    else:
+        present_day = current_date
+        formatted_date = f"{current_date}-{current_month}-{current_year}"
+    today_tag_text = f"{present_day}-{current_month}-{current_year}"
+
+    r = requests.get(alternate_papers_link.get(paper_name))
+    # r = requests.get(
+    #     "https://www.careerswave.in/hindustan-times-newspaper-free-download/")
+
+    # If this line causes an error, run 'pip install html5lib'
+    soup = BeautifulSoup(r.content, 'html5lib')
+    # print(soup.find_all("td"))
+
+    def get_link(today_tag_text):
+        for tag in soup.find_all('tr'):
+            if ((tag.text).startswith(f"\n{today_tag_text}")):
+                print()
+                return tag.text.split(f"\n{today_tag_text}")[1]
+
+    link = get_link(today_tag_text)
+    # print(link)
+    # print(today_tag_text)
+
+    if "bit.ly" in link:
+        resp = requests.get(link)
+        file_id = resp.url.split('/')[5]
+    else:
+        file_id = link.split('/')[5]
+    gdd.download_file_from_google_drive(file_id=file_id,
+                                        dest_path=f"./paper/{formatted_date} {paper_name}.pdf", showsize=True, overwrite=True)
+    return f"./paper/{formatted_date} {paper_name}.pdf"
+
+
+# alternate_downloader("AMAR_UJALA")
