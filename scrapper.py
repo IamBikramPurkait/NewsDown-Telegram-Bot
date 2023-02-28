@@ -8,7 +8,7 @@ import os
 import html5lib  # (for parsing) pip install html5
 
 
-def time():
+def get_time():
     today = datetime.now(timezone("Asia/Kolkata"))
     paper_available_time = "07:00"
     current_time = datetime.now(timezone("Asia/Kolkata")
@@ -99,7 +99,7 @@ alternate_papers_link = {
 
 
 def paper_downloader(paper_name):
-    time_stamp = time()
+    time_stamp = get_time()
     current_time = time_stamp.get("current_time")
     paper_available_time = time_stamp.get("paper_available_time")
     current_date = time_stamp.get("current_date")
@@ -140,7 +140,7 @@ def paper_downloader(paper_name):
 
 
 def anandabazar(paper_name):
-    time_stamp = time()
+    time_stamp = get_time()
     current_time = time_stamp.get("current_time")
     paper_available_time = time_stamp.get("paper_available_time")
     current_date = time_stamp.get("current_date")
@@ -179,7 +179,7 @@ def anandabazar(paper_name):
 
 
 def ekdin(paper_name):
-    time_stamp = time()
+    time_stamp = get_time()
     current_time = time_stamp.get("current_time")
     paper_available_time = time_stamp.get("paper_available_time")
     current_date = time_stamp.get("current_date")
@@ -203,7 +203,7 @@ def ekdin(paper_name):
 
 
 def pioneer(paper_name):
-    time_stamp = time()
+    time_stamp = get_time()
     current_time = time_stamp.get("current_time")
     paper_available_time = time_stamp.get("paper_available_time")
     current_date = time_stamp.get("current_date")
@@ -227,7 +227,7 @@ def pioneer(paper_name):
 
 
 def alternate_downloader(paper_name):
-    time_stamp = time()
+    time_stamp = get_time()
     current_time = time_stamp.get("current_time")
     paper_available_time = time_stamp.get("paper_available_time")
     current_date = time_stamp.get("current_date")
@@ -244,12 +244,9 @@ def alternate_downloader(paper_name):
     today_tag_text = f"{present_day}-{current_month}-{current_year}"
 
     r = requests.get(alternate_papers_link.get(paper_name))
-    # r = requests.get(
-    #     "https://www.careerswave.in/hindustan-times-newspaper-free-download/")
 
     # If this line causes an error, run 'pip install html5lib'
     soup = BeautifulSoup(r.content, 'html5lib')
-    # print(soup.find_all("td"))
 
     def get_link(today_tag_text):
         for tag in soup.find_all('tr'):
@@ -258,8 +255,6 @@ def alternate_downloader(paper_name):
                 return tag.text.split(f"\n{today_tag_text}")[1]
 
     link = get_link(today_tag_text)
-    # print(link)
-    # print(today_tag_text)
 
     if "bit.ly" in link:
         resp = requests.get(link)
@@ -269,6 +264,3 @@ def alternate_downloader(paper_name):
     gdd.download_file_from_google_drive(file_id=file_id,
                                         dest_path=f"./paper/{formatted_date} {paper_name}.pdf", showsize=True, overwrite=True)
     return f"./paper/{formatted_date} {paper_name}.pdf"
-
-
-# alternate_downloader("AMAR_UJALA")
