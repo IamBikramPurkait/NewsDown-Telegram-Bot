@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import os
+import time
 from dotenv import load_dotenv
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup
 from scrapper import *
+
 
 file_name = ""
 not_available_papers = []
@@ -228,16 +230,11 @@ DOWNLOAD_MESSAGE = " paper selected. Press /download for download the newspaper.
 
 @ bot.on_message(filters.command('start'))
 def start(bot, message):
-    time_stamp = time()
+    time_stamp = get_time()
     current_time = time_stamp.get("current_time")
     paper_available_time = time_stamp.get("paper_available_time")
 
     print("Current time -->", current_time)
-
-    # current_date = time_stamp.get("current_date")
-    # previous_date = time_stamp.get("previous_date")
-    # print(current_date)
-    # print(previous_date)
 
     if current_time <= paper_available_time:
         bot.send_message(
@@ -505,11 +502,11 @@ def forward_messages(bot, message):
 
     def send_document(file_name):
         file_type = open(file_name, 'rb')
+        time.sleep(30)
         bot.send_document(
             message.chat.id, file_type, file_name=file_name.split('/')[2])
 
     def paper():
-        # bot.send_message(message.chat.id, "Starting...")
         print("Start Forwarding")
 
         # LIST OF PAPERS
