@@ -10,7 +10,7 @@ from scrapper import *
 
 file_name = ""
 not_available_papers = []
-file_name_list = []
+file_name_list = set()
 
 
 load_dotenv()
@@ -503,18 +503,19 @@ def forward_messages(bot, message):
 
     def send_document(file_name):
         file_type = open(file_name, 'rb')
-        time.sleep(30)
+        # time.sleep(30)
         bot.send_document(
             message.chat.id, file_type, file_name=file_name.split('/')[2])
 
     def paper():
         print("Start Forwarding")
+        file_name_list.clear()
 
         # LIST OF PAPERS
         for name, value in alternate_papers_link.items():
             try:
                 file_name = file_name_generator(name)
-                file_name_list.append(file_name)
+                file_name_list.add(file_name)
             except Exception:
                 print("error")
                 continue
@@ -523,7 +524,7 @@ def forward_messages(bot, message):
         for name in anandabazar_papers_list:
             try:
                 file_name = file_name_generator(name)
-                file_name_list.append(file_name)
+                file_name_list.add(file_name)
             except Exception:
                 print("error")
                 continue
@@ -531,7 +532,7 @@ def forward_messages(bot, message):
         # EKDIN
         try:
             file_name = ekdin("EKDIN")
-            file_name_list.append(file_name)
+            file_name_list.add(file_name)
         except Exception:
             print("error")
 
@@ -539,7 +540,7 @@ def forward_messages(bot, message):
         for name in pioneer_paper_list:
             try:
                 file_name = pioneer(name)
-                file_name_list.append(file_name)
+                file_name_list.add(file_name)
             except Exception:
                 print("error")
                 continue
@@ -551,9 +552,9 @@ def forward_messages(bot, message):
             send_document(name)
 
         pdf_cleaner_newsdown()
+        file_name_list.clear()
 
         print(not_available_papers)
-        file_name_list.clear()
         print("Done")
 
     paper()
