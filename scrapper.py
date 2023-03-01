@@ -4,7 +4,6 @@ from datetime import datetime
 from pytz import timezone
 import requests
 import img2pdf
-import os
 import html5lib  # (for parsing) pip install html5
 
 
