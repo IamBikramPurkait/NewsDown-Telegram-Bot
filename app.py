@@ -550,7 +550,6 @@ def forward_messages(bot, message):
             bot.send_sticker(
                 message.chat.id, f"./sticker/{name.split(' ')[1].split('.')[0]}.webp")
             send_document(name)
-        print(file_name_list)
 
         pdf_cleaner_newsdown()
         file_name_list.clear()
