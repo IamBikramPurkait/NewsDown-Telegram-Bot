@@ -4,7 +4,7 @@ import os
 import time
 from dotenv import load_dotenv
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from scrapper import *
 
 
@@ -86,7 +86,7 @@ def about(bot, message):
     message.reply_text(
         """
         Welcome to NewsDown.\nNewsDown download a newsapaper for you in just one click.\nNewsDown is built in python with ❤️.
-        \nIt can download 9 English, 10 Hindi and 2 Bengali varient newspaper.\nIf you have any query, contact me - Bikram Purkait ( @IamBikramPurkait ).
+        \nIt can download 14 English, 12 Hindi and 5 Bengali varient newspaper.\nIf you have any query, contact me - Bikram Purkait ( @IamBikramPurkait ).
         """)
 
 
