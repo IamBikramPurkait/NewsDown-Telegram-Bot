@@ -18,7 +18,6 @@ def get_time():
     current_month = today.strftime('%m')
     current_year = today.strftime('%Y')
     present_month = str(today.strftime("%b"))
-    present_month_full = str(today.strftime("%B"))
 
     year_month_stamp = today.strftime('%Y-%m')
 
@@ -30,8 +29,7 @@ def get_time():
         "current_month": current_month,
         "current_year": current_year,
         "present_month": present_month,
-        "year_month_stamp": year_month_stamp,
-        "present_month_full": present_month_full
+        "year_month_stamp": year_month_stamp
     }
     return time_stamp
 
@@ -89,6 +87,7 @@ alternate_papers_link = {
     "RASHTRIYA_SAHARA": "https://www.careerswave.in/rashtriya-sahara-epaper-download/",
 
     # BENGALI
+    "ANANDABAZAR": "https://www.careerswave.in/anandabazar-patrika-newspaper-download/",
     "DAINIK_STATESMAN": "https://www.careerswave.in/dainik-statesman-epaper-download/",
     "EISAMAY": "https://www.careerswave.in/ei-samay-epaper-pdf/",
     "SANGBAD_PRATIDIN": "https://www.careerswave.in/sangbad-pratidin-epaper/",
@@ -211,7 +210,6 @@ def pioneer(paper_name):
     previous_date = time_stamp.get("previous_date")
     current_month = time_stamp.get("current_month")
     current_year = time_stamp.get("current_year")
-    present_month_full = time_stamp.get("present_month_full")
 
     if current_time <= paper_available_time:
         date_stamp = f"{current_year}-{current_month}-{previous_date}"
@@ -220,7 +218,7 @@ def pioneer(paper_name):
         date_stamp = f"{current_year}-{current_month}-{current_date}"
         formatted_date = f"{current_date}-{current_month}-{current_year}"
 
-    link = f"https://www.daily{paper_name.lower().split('-')[0]}.com/uploads/{current_year}/epaper/{present_month_full.lower()}/delhi-{paper_name.lower().split('-')[1]}-edition-{date_stamp}.pdf"
+    link = f"https://www.daily{paper_name.lower().split('-')[0]}.com/uploads/{current_year}/epaper/february/delhi-{paper_name.lower().split('-')[1]}-edition-{date_stamp}.pdf"
 
     response = requests.get(link)
     with open(f"./paper/{formatted_date} {paper_name}.pdf", "wb") as f:
@@ -257,7 +255,6 @@ def alternate_downloader(paper_name):
                 return tag.text.split(f"\n{today_tag_text}")[1]
 
     link = get_link(today_tag_text)
-    print(link)
 
     if "bit.ly" in link:
         resp = requests.get(link)
