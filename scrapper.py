@@ -255,6 +255,7 @@ def alternate_downloader(paper_name):
                 return tag.text.split(f"\n{today_tag_text}")[1]
 
     link = get_link(today_tag_text)
+    print(link)
 
     if "bit.ly" in link:
         resp = requests.get(link)
@@ -264,3 +265,6 @@ def alternate_downloader(paper_name):
     gdd.download_file_from_google_drive(file_id=file_id,
                                         dest_path=f"./paper/{formatted_date} {paper_name}.pdf", showsize=True, overwrite=True)
     return f"./paper/{formatted_date} {paper_name}.pdf"
+
+
+print(alternate_downloader("MINT"))

@@ -32,6 +32,7 @@ def pdf_cleaner_newsdown():
 
 
 def file_name_generator(paper_name):
+    global file_name
     for _ in range(1):
         try:
             file_name = alternate_downloader(paper_name)
