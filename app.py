@@ -9,7 +9,7 @@ from scrapper import *
 
 file_name = ""
 not_available_papers = []
-file_name_list = set()
+file_name_list = []
 
 
 load_dotenv()
@@ -514,7 +514,7 @@ def forward_messages(bot, message):
         for name, value in alternate_papers_link.items():
             try:
                 file_name = file_name_generator(name)
-                file_name_list.add(file_name)
+                file_name_list.append(file_name)
             except Exception:
                 print("error")
                 continue
@@ -523,7 +523,7 @@ def forward_messages(bot, message):
         for name in anandabazar_papers_list:
             try:
                 file_name = file_name_generator(name)
-                file_name_list.add(file_name)
+                file_name_list.append(file_name)
             except Exception:
                 print("error")
                 continue
@@ -531,7 +531,7 @@ def forward_messages(bot, message):
         # EKDIN
         try:
             file_name = ekdin("EKDIN")
-            file_name_list.add(file_name)
+            file_name_list.append(file_name)
         except Exception:
             print("error")
 
@@ -539,10 +539,12 @@ def forward_messages(bot, message):
         for name in pioneer_paper_list:
             try:
                 file_name = pioneer(name)
-                file_name_list.add(file_name)
+                file_name_list.append(file_name)
             except Exception:
                 print("error")
                 continue
+
+        file_name_list = list(dict.fromkeys(file_name_list))
 
         bot.send_message(message.chat.id, "Start Forwarding")
         for name in file_name_list:
