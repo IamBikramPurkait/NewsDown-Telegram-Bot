@@ -508,6 +508,7 @@ def forward_messages(bot, message):
 
     def paper():
         print("Start Forwarding")
+        global file_name_list
         file_name_list.clear()
 
         # LIST OF PAPERS
