@@ -85,7 +85,7 @@ def about(bot, message):
     message.reply_text(
         """
         Welcome to NewsDown.\nNewsDown download a newsapaper for you in just one click.\nNewsDown is built in python with ❤️.
-        \nIt can download 14 English, 12 Hindi and 5 Bengali varient newspaper.\nIf you have any query, contact me - Bikram Purkait ( @IamBikramPurkait ).
+        \nIt can download 14 English, 12 Hindi, 5 Bengali and 3 Kannada varient newspaper.\nIf you have any query, contact me - Bikram Purkait ( @IamBikramPurkait ).
         """)
 
 
@@ -106,7 +106,8 @@ LANGUAGE_SELECT_BUTTON = [
     [
         InlineKeyboardButton('ENGLISH', callback_data="ENGLISH"),
         InlineKeyboardButton('HINDI', callback_data="HINDI"),
-        InlineKeyboardButton('BENGALI', callback_data="BENGALI")
+        InlineKeyboardButton('BENGALI', callback_data="BENGALI"),
+        InlineKeyboardButton('KANNADA', callback_data="KANNADA")
 
     ]
 ]
@@ -223,6 +224,17 @@ BENGALI_NEWS_BUTTON = [
 
 ]
 
+KANNADA_NEWS_BUTTON = [
+    [
+        InlineKeyboardButton('PRABHA', callback_data="PRABHA"),
+        InlineKeyboardButton('PRAJAVANI', callback_data="PRAJAVANI"),
+        InlineKeyboardButton('VISHWAVANI', callback_data="VISHWAVANI")
+    ],
+    [
+        InlineKeyboardButton('BACK', callback_data="BACK")
+    ]
+
+]
 
 START_MESSAGE = "Select a Langauge"
 DOWNLOAD_MESSAGE = " paper selected. Press /download for download the newspaper."
@@ -264,6 +276,11 @@ def callback_query(bot, callback):
         callback.edit_message_text(
             TEXT,
             reply_markup=InlineKeyboardMarkup(BENGALI_NEWS_BUTTON)
+        )
+    elif callback.data == "KANNADA":
+        callback.edit_message_text(
+            TEXT,
+            reply_markup=InlineKeyboardMarkup(KANNADA_NEWS_BUTTON)
         )
     elif callback.data == "BACK":
         callback.edit_message_text(
@@ -481,6 +498,24 @@ def callback_query(bot, callback):
 
     elif callback.data == "SANGBAD_PRATIDIN":
         paper_name = "SANGBAD_PRATIDIN"
+        file_name = file_name_generator(paper_name)
+        callback.edit_message_text(
+            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
+        )
+    elif callback.data == "PRABHA":
+        paper_name = "KANNADA_PRABHA"
+        file_name = file_name_generator(paper_name)
+        callback.edit_message_text(
+            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
+        )
+    elif callback.data == "PRAJAVANI":
+        paper_name = "KANNADA_PRAJAVANI"
+        file_name = file_name_generator(paper_name)
+        callback.edit_message_text(
+            text=f"{paper_name}{DOWNLOAD_MESSAGE}"
+        )
+    elif callback.data == "VISHWAVANI":
+        paper_name = "KANNADA_VISHWAVANI"
         file_name = file_name_generator(paper_name)
         callback.edit_message_text(
             text=f"{paper_name}{DOWNLOAD_MESSAGE}"

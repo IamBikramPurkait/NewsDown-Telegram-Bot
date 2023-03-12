@@ -93,7 +93,12 @@ alternate_papers_link = {
     "SANGBAD_PRATIDIN": "https://www.careerswave.in/sangbad-pratidin-epaper/",
 
     # PUNJABI
-    "TRIBUNE_PUNJABI": "https://www.careerswave.in/punjabi-tribune-epaper/"
+    "TRIBUNE_PUNJABI": "https://www.careerswave.in/punjabi-tribune-epaper/",
+
+    # KANNADA
+    "KANNADA_PRABHA": "https://www.careerswave.in/kannada-prabha-epaper-download/",
+    "KANNADA_PRAJAVANI": "https://www.careerswave.in/prajavani-epaper-download/",
+    "KANNADA_VISHWAVANI": "https://www.careerswave.in/vishwavani-epaper-download/",
 
 }
 
